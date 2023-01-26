@@ -23,7 +23,6 @@ public class MainTestSortedArrayStorage {
         r5.setUuid("uuid5");
 
         SORTED_ARRAY_STORAGE.save(r1);
-        SORTED_ARRAY_STORAGE.save(r2);
         SORTED_ARRAY_STORAGE.save(r3);
         SORTED_ARRAY_STORAGE.save(r4);
         System.out.println("---------------------------------------------------");
@@ -43,6 +42,10 @@ public class MainTestSortedArrayStorage {
         System.out.println("---------------------------------------------------");
         System.out.println("Testing: try to update resume which does not exist::");
         SORTED_ARRAY_STORAGE.update(r5);
+        printAll();
+        System.out.println("---------------------------------------------------");
+        System.out.println("Testing: insertion in position inside of the array::");
+        SORTED_ARRAY_STORAGE.save(r2);
         printAll();
         System.out.println("---------------------------------------------------");
         System.out.println("Testing: delete");
