@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistResumeException;
+import com.urise.webapp.exception.NotExistResumeException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -21,8 +24,7 @@ public abstract class AbstractArrayStorage implements Storage{
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " does not exist");
-            return null;
+            throw new NotExistResumeException(uuid);
         } else {
             return storage[index];
         }
@@ -31,7 +33,7 @@ public abstract class AbstractArrayStorage implements Storage{
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
         if (index < 0) {
-            System.out.println("Resume " + r.getUuid() + " does not exist. Cannot update.");
+            throw new NotExistResumeException(r.getUuid());
         } else {
             storage[index] = r;
         }
@@ -44,9 +46,9 @@ public abstract class AbstractArrayStorage implements Storage{
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index > 0) {
-            System.out.println("Resume " + r.getUuid() + " already exists");
+            throw new ExistResumeException(r.getUuid());
         } else if (size >= STORAGE_LIMIT) {
-            System.out.println("Storage overflow");
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
             addNew(r, index);
             size++;
@@ -56,7 +58,7 @@ public abstract class AbstractArrayStorage implements Storage{
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume " + uuid + " does not exist");
+            throw new NotExistResumeException(uuid);
         } else {
             replaceDeleted(index);
             storage[size - 1] = null;
