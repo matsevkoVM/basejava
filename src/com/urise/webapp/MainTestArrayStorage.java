@@ -23,8 +23,8 @@ public class MainTestArrayStorage{
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r4);
         System.out.println("---------------------------------------------------");
-        System.out.println("Testing: try to save resume which is already exists::");
-        ARRAY_STORAGE.save(r3);
+        /*System.out.println("Testing: try to save resume which is already exists::");
+        ARRAY_STORAGE.save(r3);*/
         System.out.println("---------------------------------------------------");
         printAll();
         System.out.println("---------------------------------------------------");

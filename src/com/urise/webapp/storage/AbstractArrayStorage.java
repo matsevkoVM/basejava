@@ -8,9 +8,10 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 
 public abstract class AbstractArrayStorage implements Storage{
-    protected static final int STORAGE_LIMIT = 10000;
-    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected static final int STORAGE_LIMIT = 10;
+    protected static final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
+
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -45,7 +46,7 @@ public abstract class AbstractArrayStorage implements Storage{
 
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index > 0) {
+        if (index >= 0) {
             throw new ExistResumeException(r.getUuid());
         } else if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
