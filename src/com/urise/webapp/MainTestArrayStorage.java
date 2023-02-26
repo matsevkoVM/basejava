@@ -1,6 +1,7 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.AbstractArrayStorage;
 import com.urise.webapp.storage.ArrayStorage;
 import com.urise.webapp.storage.Storage;
 
@@ -41,6 +42,15 @@ public class MainTestArrayStorage{
 
         printAll();
         ARRAY_STORAGE.getAllSorted();
+        printAll();
+
+        ARRAY_STORAGE.clear();
+        printAll();
+        int fullNameNumber = 0;
+        for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
+            ARRAY_STORAGE.save(new Resume(fullNameNumber + " name"));
+            fullNameNumber ++;
+        }
         printAll();
     }
     static void printAll() {

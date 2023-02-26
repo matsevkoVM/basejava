@@ -7,9 +7,9 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage{
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer>{
 
-    protected static final int STORAGE_LIMIT = 10;
+    public static final int STORAGE_LIMIT = 10;
     protected static final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
@@ -18,36 +18,36 @@ public abstract class AbstractArrayStorage extends AbstractStorage{
     protected abstract void addNew (Resume r, int index);
 
     @Override
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     @Override
-    protected void specificSave(Resume r, Object index) {
+    protected void specificSave(Resume r, Integer index) {
         index = getSearchKey(r.getUuid());
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
-            addNew(r, (Integer)index);
+            addNew(r, index);
             size++;
         }
     }
     @Override
-    protected void specificUpdate(Resume r, Object searchKey) {
+    protected void specificUpdate(Resume r, Integer searchKey) {
         searchKey = getSearchKey(r.getUuid());
-        if ((Integer)searchKey < 0) {
+        if (searchKey < 0) {
             throw new NotExistResumeException(r.getUuid());
         } else {
-            storage[(Integer)searchKey] = r;
+            storage[searchKey] = r;
         }
     }
     @Override
-    protected Resume specificGet(Object searchKey) {
-        return storage[(Integer)searchKey];
+    protected Resume specificGet(Integer searchKey) {
+        return storage[searchKey];
     }
     @Override
-    protected void specificDelete(Object searchKey) {
-        replaceDeleted((Integer)searchKey);
+    protected void specificDelete(Integer searchKey) {
+        replaceDeleted(searchKey);
         storage[size - 1] = null;
         size--;
     }

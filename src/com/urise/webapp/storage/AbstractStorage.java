@@ -6,62 +6,72 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SearchKey> implements Storage {
 
-    protected abstract Object getSearchKey(String uuid);
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    protected abstract boolean isExist(Object searchKey);
+    protected abstract SearchKey getSearchKey(String uuid);
 
-    protected abstract void specificSave(Resume r, Object searchKey);
+    protected abstract boolean isExist(SearchKey searchKey);
 
-    protected abstract void specificUpdate(Resume r, Object searchKey);
+    protected abstract void specificSave(Resume r, SearchKey searchKey);
 
-    protected abstract Resume specificGet(Object searchKey);
+    protected abstract void specificUpdate(Resume r, SearchKey searchKey);
 
-    protected abstract void specificDelete(Object searchKey);
+    protected abstract Resume specificGet(SearchKey searchKey);
+
+    protected abstract void specificDelete(SearchKey searchKey);
 
     protected abstract List<Resume> specificGetAll();
 
     public void save(Resume r) {
-        Object searchKey = getNotExistedKey(r.getUuid());
+        LOG.info("Save " + r);
+        SearchKey searchKey = getNotExistedKey(r.getUuid());
         specificSave(r, searchKey);
 
     }
 
     public void update(Resume r) {
-        Object searchKey = getExistedKey(r.getUuid());
+        LOG.info("Update " + r);
+        SearchKey searchKey = getExistedKey(r.getUuid());
         specificUpdate(r, searchKey);
     }
 
     public Resume get(String uuid) {
-        Object searchKey = getExistedKey(uuid);
+        LOG.info("Get " + uuid);
+        SearchKey searchKey = getExistedKey(uuid);
         return specificGet(searchKey);
     }
 
     public void delete(String uuid) {
-        Object searchKey = getExistedKey(uuid);
+        LOG.info("Delete " + uuid);
+        SearchKey searchKey = getExistedKey(uuid);
         specificDelete(searchKey);
     }
 
     public List<Resume> getAllSorted() {
+        LOG.info("Get All Sorted");
         Comparator<Resume> resumeComparator = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
         List<Resume> sortedList = specificGetAll();
         sortedList.sort(resumeComparator);
         return sortedList;
     }
 
-    private Object getExistedKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private SearchKey getExistedKey(String uuid) {
+        SearchKey searchKey = getSearchKey(uuid);
         if (!isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " not exist!");
             throw new NotExistResumeException(uuid);
         }
         return searchKey;
     }
 
-    private Object getNotExistedKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private SearchKey getNotExistedKey(String uuid) {
+        SearchKey searchKey = getSearchKey(uuid);
         if (isExist(searchKey)) {
+            LOG.warning("Resume " + uuid + " already exist!");
             throw new ExistResumeException(uuid);
         }
         return searchKey;

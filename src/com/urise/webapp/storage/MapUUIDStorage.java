@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapUUIDStorage extends AbstractStorage{
+public class MapUUIDStorage extends AbstractStorage<String>{
     protected static Map<String, Resume> mapStorage = new HashMap<>();
     @Override
     protected String getSearchKey(String uuid) {
@@ -12,39 +12,35 @@ public class MapUUIDStorage extends AbstractStorage{
     }
 
     @Override
-    protected boolean isExist(Object searchKey) {
+    protected boolean isExist(String searchKey) {
         return mapStorage.containsKey(String.valueOf(searchKey));
     }
 
     @Override
-    protected void specificSave(Resume r, Object searchKey) {
-        mapStorage.put((String)searchKey, r);
+    protected void specificSave(Resume r, String searchKey) {
+        mapStorage.put(searchKey, r);
     }
 
     @Override
-    protected void specificUpdate(Resume r, Object searchKey) {
-        for (Map.Entry<String, Resume> pair : mapStorage.entrySet()) {
-            if (Objects.equals(searchKey, pair.getKey())) {
-                pair.setValue(r);
-            }
-        }
+    protected void specificUpdate(Resume r, String searchKey) {
+        mapStorage.put(searchKey, r);
 
     }
 
     @Override
-    protected Resume specificGet(Object searchKey) {
+    protected Resume specificGet(String searchKey) {
         return mapStorage.get((String) searchKey);
     }
 
     @Override
-    protected void specificDelete(Object searchKey) {
+    protected void specificDelete(String searchKey) {
         mapStorage.entrySet().removeIf(entry -> Objects.equals(entry.getKey(), searchKey));
     }
 
     @Override
     protected List<Resume> specificGetAll() {
-        Collection<Resume> listedMap = mapStorage.values();
-        return Collections.list(Collections.enumeration(listedMap));
+        return new ArrayList<>(mapStorage.values());
+
     }
 
     public void clear(){
