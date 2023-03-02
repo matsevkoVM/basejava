@@ -1,16 +1,17 @@
 package com.urise.webapp.model;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Organization {
     private final Link homePage;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String title;
-    private final String description;
+    private final LocalDate[] startDate;
+    private final LocalDate[] endDate;
+    private final String[] title;
+    private final String[] description;
 
-    public Organization(String name, String url, LocalDate startDate, LocalDate endDate, String title, String description) {
+    public Organization(String name, String url, LocalDate[] startDate, LocalDate[] endDate, String[] title, String[] description) {
         Objects.requireNonNull(startDate, "startDate must be not null");
         Objects.requireNonNull(endDate, "endDate  must be not null");
         Objects.requireNonNull(title, "title must be not null");
@@ -23,13 +24,15 @@ public class Organization {
 
     @Override
     public String toString() {
-        return "Organization{" +
-                "homePage=" + homePage +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", title=" + title + '\'' +
-                ", description=" + description + '\'' +
-                '}';
+        String org = "Organization{ homePage=" + homePage + "\n";
+        String tmp;
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < startDate.length; i++) {
+            tmp = "startDate = " + startDate[i] + ", endDate = " + endDate[i] +
+                    ", title=" + title[i] + '\'' + ", description=" + description[i] + '\'' + '}';
+            result.append(tmp).append("\n");
+        }
+        return org + result;
     }
 
     @Override
@@ -39,20 +42,24 @@ public class Organization {
 
         Organization that = (Organization) o;
 
-        if (!Objects.equals(homePage, that.homePage)) return false;
-        if (!startDate.equals(that.startDate)) return false;
-        if (!endDate.equals(that.endDate)) return false;
-        if (!title.equals(that.title)) return false;
-        return Objects.equals(description, that.description);
+        if (!homePage.equals(that.homePage)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(startDate, that.startDate)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(endDate, that.endDate)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(title, that.title)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
         int result = homePage.hashCode();
-        result = 31 * result + startDate.hashCode();
-        result = 31 * result + endDate.hashCode();
-        result = 31 * result + title.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(startDate);
+        result = 31 * result + Arrays.hashCode(endDate);
+        result = 31 * result + Arrays.hashCode(title);
+        result = 31 * result + Arrays.hashCode(description);
         return result;
     }
 }
