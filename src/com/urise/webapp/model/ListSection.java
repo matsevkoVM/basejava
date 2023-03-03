@@ -3,10 +3,10 @@ package com.urise.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class ListSection extends Section{
+public class ListSection extends Section {
     private final List<String> items;
 
-    public ListSection (List<String> items){
+    public ListSection(List<String> items) {
         Objects.requireNonNull(items, "items must be not null");
         this.items = items;
     }
@@ -17,7 +17,15 @@ public class ListSection extends Section{
 
     @Override
     public String toString() {
-        return items.toString();
+        StringBuilder formatted = new StringBuilder();
+        for (int i = 0; i < items.size(); i++) {
+            if (i == items.size() - 1) {
+                formatted.append(String.format("%s", items.get(i)));
+            } else {
+                formatted.append(String.format("%s%n", items.get(i)));
+            }
+        }
+        return formatted.toString();
     }
 
     @Override

@@ -29,7 +29,7 @@ public class Organization {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < startDate.length; i++) {
             tmp = "startDate = " + startDate[i] + ", endDate = " + endDate[i] +
-                    ", title=" + title[i] + '\'' + ", description=" + description[i] + '\'' + '}';
+                    ", title = " + title[i] + '\'' + ", description = " + description[i] + '\'' + '}';
             result.append(tmp).append("\n");
         }
         return org + result;
