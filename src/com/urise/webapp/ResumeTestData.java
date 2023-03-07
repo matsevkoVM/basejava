@@ -27,34 +27,49 @@ public class ResumeTestData {
                 "*Пророк Самуїл, старий жид."};
         String[] qualificationArray = new String[]{"Qualification1", "Qualification2", "Qualification3", "Qualification4",
                 "Qualification5", "Qualification6", "Qualification7", "Qualification8", "Qualification9",};
-        String[] title1 = new String[]{"Захеканий мудило в цигейковій шапці"};
-        String[] title2 = new String[]{"Звєзда вастока"};
-        String[] title3 =new String[]{"Йобане чмо", "Хтивий дядько принца"};
-        String[] titleEducation =new String[]{"Пацан ішчьо", "Помічник тракториста", "Сам господь бог"};
-        String[] description1 = new String[]{"description 1"};
-        String[] description2 = new String[]{"description 2"};
-        String[] description3 = new String[]{"description 3", "description 4"};
-        String[] descriptionEducation = new String[]{"description Education", "description Education1", "description Education2"};
+        String title1 = "Захеканий мудило в цигейковій шапці";
+        String title2 = "Звєзда вастока";
+        String title3 = "Йобане чмо";
+        String title3_1 = "Хтивий дядько принца";
+        String titleEducation1 = "Пацан ішчьо";
+        String titleEducation2 = "Помічник тракториста";
+        String titleEducation3 = "Сам господь бог";
+        String description1 = "description 1";
+        String description2 = "description 2";
+        String description3 = "description 3";
+        String description3_1 = "description 4";
+        String descriptionEducation1 = "description Education";
+        String descriptionEducation2 = "description Education1";
+        String descriptionEducation3 = "description Education2";
         Resume r = new Resume("uuid01", "Tomas Edison");
         Link org1 = new Link("Organization1 name", "https://www.somelink1.something.else");
         Link org2 = new Link("Organization2 name", "https://www.somelink2.something.else");
         Link org3 = new Link("Organization3 name", "https://www.somelink3.something.else");
         Link orgEdu = new Link("OrganizationEducation name", "https://www.someEDUCATIONALlink.something.else");
-        LocalDate[] startOrg1 = new LocalDate[]{DateUtil.of(2000, Month.SEPTEMBER)};
-        LocalDate[] endOrg1 = new LocalDate[]{DateUtil.of(2002, Month.OCTOBER)};
-        LocalDate[] startOrg2 = new LocalDate[]{DateUtil.of(2002, Month.DECEMBER)};
-        LocalDate[] endOrg2 = new LocalDate[]{DateUtil.of(2005, Month.NOVEMBER)};
-        LocalDate[] startOrg3 = new LocalDate[]{DateUtil.of(2006, Month.JANUARY), DateUtil.of(2010, Month.NOVEMBER)};
-        LocalDate[] endOrg3 = new LocalDate[]{DateUtil.of(2010, Month.SEPTEMBER), DateUtil.of(2013, Month.FEBRUARY)};
-        LocalDate[] startEdu = new LocalDate[]{DateUtil.of(1992, Month.JANUARY), DateUtil.of(1995, Month.DECEMBER),
-                DateUtil.of(1998, Month.DECEMBER)};
-        LocalDate[] endEdu = new LocalDate[]{DateUtil.of(1995, Month.NOVEMBER), DateUtil.of(1998, Month.FEBRUARY),
-                DateUtil.of(2000, Month.DECEMBER)};
-        Organization[] orgs = new Organization[]{new Organization(org1.getName(), org1.getUrl(), startOrg1, endOrg1, title1, description1),
-        new Organization(org2.getName(), org2.getUrl(), startOrg2, endOrg2, title2, description2), new Organization(org3.getName(),
-                org3.getUrl(), startOrg3, endOrg3, title3, description3)};
-        Organization[] orgEducation = new Organization[] {new Organization(orgEdu.getName(), orgEdu.getUrl(), startEdu,
-                endEdu,titleEducation, descriptionEducation )};
+        LocalDate startOrg1 = DateUtil.of(2000, Month.SEPTEMBER);
+        LocalDate endOrg1 = DateUtil.of(2002, Month.OCTOBER);
+        LocalDate startOrg2 = DateUtil.of(2002, Month.DECEMBER);
+        LocalDate endOrg2 = DateUtil.of(2005, Month.NOVEMBER);
+        LocalDate startOrg3 = DateUtil.of(2006, Month.JANUARY);
+        LocalDate startOrg3_1 = DateUtil.of(2010, Month.NOVEMBER);
+        LocalDate endOrg3 = DateUtil.of(2010, Month.SEPTEMBER);
+        LocalDate endOrg3_1 = DateUtil.of(2013, Month.FEBRUARY);
+        LocalDate startEdu1 = DateUtil.of(1992, Month.JANUARY);
+        LocalDate startEdu2 = DateUtil.of(1995, Month.DECEMBER);
+        LocalDate startEdu3 = DateUtil.of(1998, Month.DECEMBER);
+        LocalDate endEdu1 = DateUtil.of(1995, Month.NOVEMBER);
+        LocalDate endEdu2 = DateUtil.of(1998, Month.FEBRUARY);
+        LocalDate endEdu3 = DateUtil.of(2000, Month.DECEMBER);
+        Organization.Position[] positions = new Organization.Position[]{new Organization.Position(startOrg1, endOrg1, title1, description1)};
+        Organization.Position[] positions2 = new Organization.Position[]{new Organization.Position(startOrg2, endOrg2, title2, description2)};
+        Organization.Position[] positions3 = new Organization.Position[]{new Organization.Position(startOrg3, endOrg3, title3, description3),
+                new Organization.Position(startOrg3_1, endOrg3_1, title3_1, description3_1)};
+        Organization.Position[] positions4 = new Organization.Position[]{new Organization.Position(startEdu1, endEdu1, titleEducation1,
+                descriptionEducation1), new Organization.Position(startEdu2, endEdu2, titleEducation2, descriptionEducation2),
+                new Organization.Position(startEdu3, endEdu3, titleEducation3, descriptionEducation3)};
+        Organization[] orgs = new Organization[]{new Organization(org1, Arrays.asList(positions)),
+                new Organization(org2, Arrays.asList(positions2)), new Organization(org3, Arrays.asList(positions3))};
+        Organization[] orgEducation = new Organization[]{new Organization(orgEdu, Arrays.asList(positions4))};
         OrganizationSection orgSection = new OrganizationSection(Arrays.asList(orgs));
         OrganizationSection educationSection = new OrganizationSection(Arrays.asList(orgEducation));
         TextSection position = new TextSection(String.format("%s%n%s", positionName, position_description));

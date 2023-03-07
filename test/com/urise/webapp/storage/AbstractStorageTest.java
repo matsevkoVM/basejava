@@ -2,10 +2,11 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistResumeException;
 import com.urise.webapp.exception.NotExistResumeException;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +23,10 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final String FULL_NAME_UUID_1 = "Laszlo";
-    private static final String FULL_NAME_UUID_2 = "Giorgio";
-    private static final String FULL_NAME_UUID_3 = "Scarlett";
-    private static final String FULL_NAME_UUID_4 = "Frenkel";
+    private static final String FULL_NAME_1 = "Laszlo";
+    private static final String FULL_NAME_2 = "Giorgio";
+    private static final String FULL_NAME_3 = "Scarlett";
+    private static final String FULL_NAME_4 = "Frenkel";
 
     private static final Resume R_1;
     private static final Resume R_2;
@@ -33,10 +34,34 @@ public abstract class AbstractStorageTest {
     private static final Resume R_4;
 
     static {
-        R_1 = new Resume(UUID_1, FULL_NAME_UUID_1);
-        R_2 = new Resume(UUID_2, FULL_NAME_UUID_2);
-        R_3 = new Resume(UUID_3, FULL_NAME_UUID_3);
-        R_4 = new Resume(UUID_4, FULL_NAME_UUID_4);
+        R_1 = new Resume(UUID_1, FULL_NAME_1);
+        R_2 = new Resume(UUID_2, FULL_NAME_2);
+        R_3 = new Resume(UUID_3, FULL_NAME_3);
+        R_4 = new Resume(UUID_4, FULL_NAME_4);
+        R_1.addContact(ContactType.MAIL, "mail@something.else");
+        R_1.addContact(ContactType.PHONE, "+52 998 200 0078");
+        R_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
+        R_1.addSection(SectionType.PERSONAL, new TextSection("Personal 1"));
+        R_1.addSection(SectionType.ACHIEVEMENTS, new ListSection("Achievement1", "Achievement2", "Achievement3"));
+        R_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "GitHub"));
+        R_1.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Organization_1", "https://www.something.else",
+                            new Organization.Position(2010, Month.APRIL, "position_1", "content_1"),
+                            new Organization.Position(2008, Month.JUNE, 2010, Month.MARCH, "position_2", "content_2"))));
+        R_1.addSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("Universal Univercity", "https://www.univer.net",
+                            new Organization.Position(2007, Month.SEPTEMBER, 2008, Month.MAY, "magister", "mag_content"),
+                            new Organization.Position(2003, Month.SEPTEMBER, 2007, Month.JULY, "student", "stud_content"))));
+                        new Organization("College", "https://www.college.xz");
+
+        R_2.addContact(ContactType.SKYPE, "SomeSkype");
+        R_2.addContact(ContactType.HOME_PHONE, "45-109");
+        R_2.addSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Organization_3", "https://www.something.else",
+                                new Organization.Position(2021, Month.APRIL, "position_3", "content_3"))));
     }
 
     protected AbstractStorageTest(Storage storage) {

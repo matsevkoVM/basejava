@@ -6,7 +6,6 @@ import com.urise.webapp.model.Resume;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,9 +13,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     protected abstract void writeFile(Resume r, File file) throws IOException;
 
-    protected abstract List<Resume> getAllFromFile();
-
-    protected abstract Resume getFromFile(File file);
+    protected abstract Resume readFile(File file) throws IOException;
 
     private File directory;
 
@@ -45,40 +42,46 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void specificSave(Resume r, File file) {
         try {
             file.createNewFile();
-            writeFile(r, file);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Cannot create file" + file.getAbsolutePath(), file.getName(), e);
         }
-
+        specificUpdate(r, file);
     }
 
     @Override
     protected void specificUpdate(Resume r, File file) {
         try {
             writeFile(r, file);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
     }
 
     @Override
     protected Resume specificGet(File file) {
-            return getFromFile(file);
+        try {
+            return readFile(file);
+        } catch (IOException e) {
+            throw new StorageException("File read error " + file.getAbsolutePath(), file.getName(), e);
+        }
     }
 
     @Override
     protected void specificDelete(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("File delete error ", file.getName());
+        }
     }
 
     @Override
     protected List<Resume> specificGetAll() {
         File[] files = directory.listFiles();
-        List<Resume> resumes = new ArrayList<>();
-        if (files != null) {
-            for (File f : files) {
-                resumes.add(getFromFile(f));
-            }
+        if (files == null) {
+            throw new StorageException("Directory read error", null);
+        }
+        List<Resume> resumes = new ArrayList<>(files.length);
+        for (File file : files) {
+            resumes.add(specificGet(file));
         }
         return resumes;
     }
@@ -86,20 +89,19 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public void clear() {
         File[] files = directory.listFiles();
-        if (files != null){
-            for (File f : files){
-                f.delete();
+        if (files != null) {
+            for (File file : files) {
+                specificDelete(file);
             }
         }
     }
 
     @Override
     public int size() {
-        int size = 0;
-        File[] files = directory.listFiles();
-        if (files != null){
-            size = files.length;
+        String[] files = directory.list();
+        if (files == null) {
+            throw new StorageException("Directory read error", null);
         }
-        return size;
+        return files.length;
     }
 }
