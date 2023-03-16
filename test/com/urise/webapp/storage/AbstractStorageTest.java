@@ -6,6 +6,7 @@ import com.urise.webapp.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
-
-    protected
-
-    final Storage storage;
+    protected static final File STORAGE_DIR = new File(
+            "C:\\Users\\matse\\JavaTest\\serialized\\storage");
+    protected final Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -47,14 +47,14 @@ public abstract class AbstractStorageTest {
         R_1.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organization_1", "https://www.something.else",
-                            new Organization.Position(2010, Month.APRIL, "position_1", "content_1"),
-                            new Organization.Position(2008, Month.JUNE, 2010, Month.MARCH, "position_2", "content_2"))));
+                                new Organization.Position(2010, Month.APRIL, "position_1", "content_1"),
+                                new Organization.Position(2008, Month.JUNE, 2010, Month.MARCH, "position_2", "content_2"))));
         R_1.addSection(SectionType.EDUCATION,
                 new OrganizationSection(
                         new Organization("Universal Univercity", "https://www.univer.net",
-                            new Organization.Position(2007, Month.SEPTEMBER, 2008, Month.MAY, "magister", "mag_content"),
-                            new Organization.Position(2003, Month.SEPTEMBER, 2007, Month.JULY, "student", "stud_content"))));
-                        new Organization("College", "https://www.college.xz");
+                                new Organization.Position(2007, Month.SEPTEMBER, 2008, Month.MAY, "magister", "mag_content"),
+                                new Organization.Position(2003, Month.SEPTEMBER, 2007, Month.JULY, "student", "stud_content"))));
+        new Organization("College", "https://www.college.xz");
 
         R_2.addContact(ContactType.SKYPE, "SomeSkype");
         R_2.addContact(ContactType.HOME_PHONE, "45-109");
@@ -91,7 +91,7 @@ public abstract class AbstractStorageTest {
     void save() {
         storage.save(R_4);
         assertSize(4);
-        assertGet(R_4);
+        assertEquals(R_4, storage.get(UUID_4));
     }
 
     @Test
@@ -101,8 +101,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     void update() {
-        storage.update(R_2);
-        assertGet(R_2);
+        Resume sample = new Resume(UUID_2, "Sample name");
+        storage.update(sample);
+        assertEquals(sample, storage.get(UUID_2));
     }
 
     @Test
@@ -111,14 +112,14 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void delete() throws NotExistResumeException{
+    void delete() throws NotExistResumeException {
         storage.delete(UUID_2);
         assertSize(2);
         assertThrows(NotExistResumeException.class, () -> storage.get(UUID_2));
     }
 
     @Test
-    void deleteNotExist() throws NotExistResumeException{
+    void deleteNotExist() throws NotExistResumeException {
         assertThrows(NotExistResumeException.class, () -> storage.delete("dummy"));
     }
 
@@ -135,7 +136,4 @@ public abstract class AbstractStorageTest {
         assertEquals(s, storage.size());
     }
 
-    private void assertGet(Resume r) {
-        assertEquals(r, storage.get(r.getUuid()));
-    }
 }

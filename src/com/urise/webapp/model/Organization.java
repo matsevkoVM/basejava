@@ -2,18 +2,21 @@ package com.urise.webapp.model;
 
 import com.urise.webapp.utils.DateUtil;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import static com.urise.webapp.utils.DateUtil.NOW;
 
-public class Organization {
+public class Organization implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final Link homePage;
-    private List<Position> positions = new ArrayList<>();
+    private List<Position> positions;
 
     public Organization(Link homePage, List<Position> positions) {
         this.homePage = homePage;
@@ -43,7 +46,7 @@ public class Organization {
         return Objects.hash(homePage, positions);
     }
 
-    public static class Position {
+    public static class Position implements Serializable{
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String title;

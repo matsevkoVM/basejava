@@ -3,19 +3,13 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
-
-    protected abstract void writeFile(Resume r, File file) throws IOException;
-
-    protected abstract Resume readFile(File file) throws IOException;
-
-    private File directory;
+        private final File directory;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must be not null");
@@ -27,6 +21,10 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
         this.directory = directory;
     }
+
+    protected abstract void writeFile(Resume r, OutputStream outputStream) throws IOException;
+
+    protected abstract Resume readFile(InputStream inputStream) throws IOException;
 
     @Override
     protected File getSearchKey(String uuid) {
@@ -51,7 +49,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void specificUpdate(Resume r, File file) {
         try {
-            writeFile(r, file);
+            writeFile(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
@@ -60,7 +58,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume specificGet(File file) {
         try {
-            return readFile(file);
+            return readFile(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File read error " + file.getAbsolutePath(), file.getName(), e);
         }
