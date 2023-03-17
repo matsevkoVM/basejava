@@ -7,15 +7,15 @@ import com.urise.webapp.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage<Integer>{
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     public static final int STORAGE_LIMIT = 10;
     protected static final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size;
 
-    protected abstract void replaceDeleted (int index);
+    protected abstract void replaceDeleted(int index);
 
-    protected abstract void addNew (Resume r, int index);
+    protected abstract void addNew(Resume r, int index);
 
     @Override
     protected boolean isExist(Integer index) {
@@ -32,6 +32,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer>{
             size++;
         }
     }
+
     @Override
     protected void specificUpdate(Resume r, Integer searchKey) {
         searchKey = getSearchKey(r.getUuid());
@@ -41,10 +42,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer>{
             storage[searchKey] = r;
         }
     }
+
     @Override
     protected Resume specificGet(Integer searchKey) {
         return storage[searchKey];
     }
+
     @Override
     protected void specificDelete(Integer searchKey) {
         replaceDeleted(searchKey);
@@ -57,7 +60,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer>{
         return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
-    public void clear(){
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }

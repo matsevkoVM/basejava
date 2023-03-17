@@ -11,11 +11,14 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File(
-            "C:\\Users\\matse\\JavaTest\\serialized\\storage");
+    protected static final File STORAGE_DIR_FOR_FILE = new File(
+            "C:\\Users\\matse\\JavaTest\\serialized\\storageFiles");
+    protected static final File STORAGE_DIR_FOR_PATH = new File(
+            "C:\\Users\\matse\\JavaTest\\serialized\\storagePaths");
     protected final Storage storage;
 
     private static final String UUID_1 = "uuid1";

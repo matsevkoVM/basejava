@@ -21,7 +21,7 @@ public class MainFile {
                             if (f.isFile()) {
                                 System.out.println("     File \"" + f.getName() + "\"");
                             } else {
-                                System.out.println("Directory \"" + f.getName() + "\"");
+                                System.out.println("  Directory \"" + f.getName() + "\"");
                             }
                         }
                     }
@@ -31,4 +31,3 @@ public class MainFile {
         }
     }
 }
-//System.out.println(f.getAbsolutePath() + " -> the CATALOG " + "\"" + f.getName() + "\"" + " includes: ->");

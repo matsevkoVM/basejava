@@ -22,6 +22,7 @@ public class Organization implements Serializable {
         this.homePage = homePage;
         this.positions = positions;
     }
+
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
     }
@@ -46,7 +47,7 @@ public class Organization implements Serializable {
         return Objects.hash(homePage, positions);
     }
 
-    public static class Position implements Serializable{
+    public static class Position implements Serializable {
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String title;

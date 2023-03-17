@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage<Integer>{
+public class ListStorage extends AbstractStorage<Integer> {
     protected static List<Resume> listStorage = new ArrayList<>();
 
     protected Integer getSearchKey(String uuid) {
@@ -44,7 +44,7 @@ public class ListStorage extends AbstractStorage<Integer>{
         return listStorage;
     }
 
-    public void clear(){
+    public void clear() {
         listStorage.clear();
     }
 

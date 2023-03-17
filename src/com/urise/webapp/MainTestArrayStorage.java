@@ -8,7 +8,7 @@ import com.urise.webapp.storage.Storage;
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
-public class MainTestArrayStorage{
+public class MainTestArrayStorage {
     private static final Storage ARRAY_STORAGE = new ArrayStorage();
 
     private static final String UUID_1 = "uuid1";
@@ -49,10 +49,11 @@ public class MainTestArrayStorage{
         int fullNameNumber = 0;
         for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
             ARRAY_STORAGE.save(new Resume(fullNameNumber + " name"));
-            fullNameNumber ++;
+            fullNameNumber++;
         }
         printAll();
     }
+
     static void printAll() {
         System.out.println("Get All");
         for (Resume r : ARRAY_STORAGE.getAllSorted()) {

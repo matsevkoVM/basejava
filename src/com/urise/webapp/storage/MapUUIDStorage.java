@@ -4,8 +4,9 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapUUIDStorage extends AbstractStorage<String>{
+public class MapUUIDStorage extends AbstractStorage<String> {
     protected static Map<String, Resume> mapStorage = new HashMap<>();
+
     @Override
     protected String getSearchKey(String uuid) {
         return uuid;
@@ -43,7 +44,7 @@ public class MapUUIDStorage extends AbstractStorage<String>{
 
     }
 
-    public void clear(){
+    public void clear() {
         mapStorage.clear();
     }
 

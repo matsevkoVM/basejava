@@ -1,6 +1,6 @@
 package com.urise.webapp.model;
 
-public enum ContactType{
+public enum ContactType {
     PHONE("Phone number"),
     MOBILE("Mobile phone number"),
     HOME_PHONE("Home phone number"),
