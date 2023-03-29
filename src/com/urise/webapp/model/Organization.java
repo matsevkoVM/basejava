@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.urise.webapp.utils.DateUtil.NOW;
+
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     @Serial
@@ -34,6 +35,21 @@ public class Organization implements Serializable {
         this(new Link(name, url), Arrays.asList(positions));
     }
 
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(Link homePage) {
+        this.homePage = homePage;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(List<Position> positions) {
+        this.positions = positions;
+    }
 
     @Override
     public String toString() {
@@ -53,7 +69,8 @@ public class Organization implements Serializable {
     public int hashCode() {
         return Objects.hash(homePage, positions);
     }
-@XmlAccessorType(XmlAccessType.FIELD)
+
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate startDate;
@@ -80,7 +97,7 @@ public class Organization implements Serializable {
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
         public LocalDate getStartDate() {

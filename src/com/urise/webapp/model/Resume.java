@@ -51,12 +51,12 @@ public class Resume implements Comparable<Resume>, Serializable {
         return Objects.hash(uuid, fullName, contacts, sections);
     }
 
-    public String getContacts(ContactType type) {
-        return contacts.get(type);
+    public Map<ContactType, String> getContacts() {
+        return contacts;
     }
 
-    public Section getSections(SectionType type) {
-        return sections.get(type);
+    public Map<SectionType, Section> getSections() {
+        return sections;
     }
 
     public void addContact(ContactType type, String value) {

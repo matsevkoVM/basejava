@@ -5,6 +5,6 @@ import com.urise.webapp.storage.serializers.XMLStreamStrategy;
 class XMLFIleStorageTest extends AbstractStorageTest {
 
     public XMLFIleStorageTest() {
-        super(new FileStorage(STORAGE_DIR_FOR_FILE, new XMLStreamStrategy()));
+        super(new FileStorage(XML_STORAGE_DIR_FOR_FILE, new XMLStreamStrategy()));
     }
 }

@@ -15,10 +15,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
+    protected static final File XML_STORAGE_DIR_FOR_FILE = new File(
+            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\XMLserializedByFile");
+    protected static final String XML_STORAGE_DIR_FOR_PATH =
+            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\XMLserializedByPath";
+
+    protected static final File JSON_STORAGE_DIR_FOR_FILE = new File(
+            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\JSONserializedByFile");
+    protected static final String JSON_STORAGE_DIR_FOR_PATH =
+            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\JSONserializedByPath";
+
     protected static final File STORAGE_DIR_FOR_FILE = new File(
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\serializedByFile");
+            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\binarySerializedByFile");
     protected static final String STORAGE_DIR_FOR_PATH =
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\serializedByPath";
+            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\binarySerializedByPath";
+    protected static final File DATA_FILE = new File(
+            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\DataSerialized");
+    protected static final String DATA_PATH = "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\DataPathSerialized";
+
     protected final Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -57,7 +71,8 @@ public abstract class AbstractStorageTest {
                         new Organization("Universal Univercity", "https://www.univer.net",
                                 new Organization.Position(2007, Month.SEPTEMBER, 2008, Month.MAY, "magister", "mag_content"),
                                 new Organization.Position(2003, Month.SEPTEMBER, 2007, Month.JULY, "student", "stud_content"))));
-        new Organization("College", "https://www.college.xz");
+        /*R_1.addSection(SectionType.EDUCATION,
+                new OrganizationSection(new Organization("College", "https://www.college.xz")));*/
 
         R_2.addContact(ContactType.SKYPE, "SomeSkype");
         R_2.addContact(ContactType.HOME_PHONE, "45-109");

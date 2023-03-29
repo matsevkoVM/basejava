@@ -13,7 +13,7 @@ public class FileStorage extends AbstractStorage<File> {
     private final File directory;
     private final SerializationStrategy strategy;
 
-    protected FileStorage(File directory, SerializationStrategy strategy) {
+    public FileStorage(File directory, SerializationStrategy strategy) {
         Objects.requireNonNull(directory, "directory must be not null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + "is not directory");
