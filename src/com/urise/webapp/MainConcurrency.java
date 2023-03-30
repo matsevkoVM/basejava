@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainConcurrency {
-    public static final int THREADS_NUMBER = 10000;
+    public static final int THREADS_NUMBER = 1000;
     private static int counter;
 
     public static void main(String[] args) {
