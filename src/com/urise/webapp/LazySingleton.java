@@ -1,5 +1,8 @@
 package com.urise.webapp;
 
+/**
+ This class was made for educational purposes
+ */
 public class LazySingleton {
 
     private LazySingleton() {
