@@ -6,6 +6,7 @@ import com.urise.webapp.storage.serializers.SerializationStrategy;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,8 +21,8 @@ public class PathStorage extends AbstractStorage<Path> {
 
     private final SerializationStrategy strategy;
 
-    protected PathStorage(String dir, SerializationStrategy strategy) {
-        directory = Paths.get(dir);
+    protected PathStorage(File dir, SerializationStrategy strategy) {
+        directory = Paths.get(dir.toURI());
         this.strategy = strategy;
         Objects.requireNonNull(directory, "directory must be not null");
         if (!Files.isDirectory(directory)) {

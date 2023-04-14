@@ -5,6 +5,6 @@ import com.urise.webapp.storage.serializers.ObjectStreamFIleStrategy;
 class ObjectFIleStorageTest extends AbstractStorageTest {
 
     public ObjectFIleStorageTest() {
-        super(new FileStorage(STORAGE_DIR_FOR_FILE, new ObjectStreamFIleStrategy()));
+        super(new FileStorage(STORAGE_DIR, new ObjectStreamFIleStrategy()));
     }
 }

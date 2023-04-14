@@ -5,6 +5,6 @@ import com.urise.webapp.storage.serializers.DataStreamStrategy;
 class DataFIleStorageTest extends AbstractStorageTest {
 
     public DataFIleStorageTest() {
-        super(new FileStorage(DATA_FILE, new DataStreamStrategy()));
+        super(new FileStorage(STORAGE_DIR, new DataStreamStrategy()));
     }
 }

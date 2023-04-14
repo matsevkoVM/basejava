@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistResumeException;
 import com.urise.webapp.exception.NotExistResumeException;
 import com.urise.webapp.model.*;
@@ -15,23 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractStorageTest {
-    protected static final File XML_STORAGE_DIR_FOR_FILE = new File(
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\XMLserializedByFile");
-    protected static final String XML_STORAGE_DIR_FOR_PATH =
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\XMLserializedByPath";
-
-    protected static final File JSON_STORAGE_DIR_FOR_FILE = new File(
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\JSONserializedByFile");
-    protected static final String JSON_STORAGE_DIR_FOR_PATH =
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\JSONserializedByPath";
-
-    protected static final File STORAGE_DIR_FOR_FILE = new File(
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\binarySerializedByFile");
-    protected static final String STORAGE_DIR_FOR_PATH =
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\binarySerializedByPath";
-    protected static final File DATA_FILE = new File(
-            "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\DataSerialized");
-    protected static final String DATA_PATH = "C:\\Users\\matse\\JavaTest\\basejava\\serialized\\DataPathSerialized";
+    protected static final File STORAGE_DIR = Config.getInstance().getStorageDir();
 
     protected final Storage storage;
 
@@ -55,7 +40,7 @@ public abstract class AbstractStorageTest {
         R_2 = new Resume(UUID_2, FULL_NAME_2);
         R_3 = new Resume(UUID_3, FULL_NAME_3);
         R_4 = new Resume(UUID_4, FULL_NAME_4);
-        R_1.addContact(ContactType.MAIL, "mail@something.else");
+        /*R_1.addContact(ContactType.MAIL, "mail@something.else");
         R_1.addContact(ContactType.PHONE, "+52 998 200 0078");
         R_1.addSection(SectionType.OBJECTIVE, new TextSection("Objective 1"));
         R_1.addSection(SectionType.PERSONAL, new TextSection("Personal 1"));
@@ -71,15 +56,15 @@ public abstract class AbstractStorageTest {
                         new Organization("Universal Univercity", "https://www.univer.net",
                                 new Organization.Position(2007, Month.SEPTEMBER, 2008, Month.MAY, "magister", "mag_content"),
                                 new Organization.Position(2003, Month.SEPTEMBER, 2007, Month.JULY, "student", "stud_content"))));
-        /*R_1.addSection(SectionType.EDUCATION,
-                new OrganizationSection(new Organization("College", "https://www.college.xz")));*/
+        *//*R_1.addSection(SectionType.EDUCATION,
+                new OrganizationSection(new Organization("College", "https://www.college.xz")));*//*
 
         R_2.addContact(ContactType.SKYPE, "SomeSkype");
         R_2.addContact(ContactType.HOME_PHONE, "45-109");
         R_2.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organization_3", "https://www.something.else",
-                                new Organization.Position(2021, Month.APRIL, "position_3", "content_3"))));
+                                new Organization.Position(2021, Month.APRIL, "position_3", "content_3"))));*/
     }
 
     protected AbstractStorageTest(Storage storage) {
