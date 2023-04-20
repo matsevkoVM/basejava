@@ -1,20 +1,11 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Config;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.urise.webapp.utils.Config;
 
 class SqlStorageTest extends AbstractStorageTest {
 
     protected SqlStorageTest() {
-        super(SqlStorage.sqlStorage);
+        super(Config.getInstance().getStorage());
     }
 
-    @Test
-    void getCredentials() {
-        assertEquals("jdbc:postgresql://localhost:5432/resumes", SqlStorage.getCredentials(Config.getInstance().getDbUrl(), "db.url"));
-        assertEquals("postgres", SqlStorage.getCredentials(Config.getInstance().getDbUrl(), "db.user"));
-        assertEquals("848867", SqlStorage.getCredentials(Config.getInstance().getDbUrl(), "db.password"));
-    }
 }
