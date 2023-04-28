@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.NotExistResumeException;
 import com.urise.webapp.model.*;
 import com.urise.webapp.sql.SqlHelper;
+import com.urise.webapp.utils.JSONParser;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ public class SqlStorage implements Storage {
             }
             deleteContacts(r);
             insertContacts(conn, r);
-            //TODO deleteSection !!!
+            deleteSection(r);
+            insertSection(conn, r);
             return null;
         });
     }
@@ -84,23 +86,28 @@ public class SqlStorage implements Storage {
     }
 
     @Override
-    public List<Resume> getAllSorted() { //TODO getAllSorted !!!
-        return sqlHelper.execute("SELECT * FROM resume r LEFT JOIN contact c ON r.uuid = c.resume_uuid ORDER BY full_name, uuid",
-                preparedStatement -> {
-                    ResultSet rs = preparedStatement.executeQuery();
-                    Map<String, Resume> map = new LinkedHashMap<>();
-                    while (rs.next()) {
-                        String uuid = rs.getString("uuid");
-                        Resume resume = map.get(uuid);
-                        if (resume == null) {
-                            resume = new Resume(uuid, rs.getString("full_name"));
-                            map.put(uuid, resume);
-                        }
-                        putContact(rs, resume);
-                        putSections(rs, resume);
-                    }
-                    return new ArrayList<>(map.values());
-                });
+    public List<Resume> getAllSorted() {
+        return sqlHelper.execute("" +
+                "   SELECT * FROM resume r " +
+                "LEFT JOIN contact c " +
+                "       ON r.uuid = c.resume_uuid " +
+                "LEFT JOIN sections s" +
+                "       ON r.uuid = s.resume_uuid" +
+                " ORDER BY full_name, uuid", ps -> {
+            ResultSet rs = ps.executeQuery();
+            Map<String, Resume> map = new LinkedHashMap<>();
+            while (rs.next()) {
+                String uuid = rs.getString("uuid");
+                Resume resume = map.get(uuid);
+                if (resume == null) {
+                    resume = new Resume(uuid, rs.getString("full_name"));
+                    map.put(uuid, resume);
+                }
+                putContact(rs, resume);
+                putSections(rs, resume);
+            }
+            return new ArrayList<>(map.values());
+        });
     }
 
     @Override
@@ -133,7 +140,8 @@ public class SqlStorage implements Storage {
             for (Map.Entry<SectionType, Section> pair : r.getSections().entrySet()) {
                 ps.setString(1, r.getUuid());
                 ps.setString(2, pair.getKey().name());
-                ps.setString(3, pair.getValue().toString());
+                Section section = pair.getValue();
+                ps.setString(3, JSONParser.write(section, Section.class));
                 ps.addBatch();
             }
             ps.executeBatch();
@@ -142,6 +150,14 @@ public class SqlStorage implements Storage {
 
     private void deleteContacts(Resume r) {
         sqlHelper.<Void>execute("DELETE FROM contact WHERE resume_uuid=?", ps -> {
+            ps.setString(1, r.getUuid());
+            ps.execute();
+            return null;
+        });
+    }
+
+    private void deleteSection(Resume r) {
+        sqlHelper.<Void>execute("DELETE FROM sections WHERE resume_uuid=?", ps -> {
             ps.setString(1, r.getUuid());
             ps.execute();
             return null;
@@ -158,19 +174,9 @@ public class SqlStorage implements Storage {
     }
 
     private void putSections(ResultSet rs, Resume r) throws SQLException {
-        if (r != null) {
-            Object value = rs.getObject("section_value");
-            if (value != null) {
-                if (value instanceof TextSection) {
-                    r.addSection(SectionType.valueOf(rs.getString("section_type")), (TextSection) value);
-                } else if (value instanceof ListSection) {
-                    List<String> list = new ArrayList<>();
-                    while (rs.next()) {
-                        list.add(rs.getString("section_value"));
-                    }
-                    r.addSection(SectionType.valueOf(rs.getString("section_type")), new ListSection(list));
-                }
-            }
+        String content = rs.getString("section_value");
+        if (content != null) {
+            r.addSection(SectionType.valueOf(rs.getString("section_type")), JSONParser.read(content, Section.class));
         }
     }
 }
