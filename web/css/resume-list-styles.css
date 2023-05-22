@@ -1,0 +1,127 @@
+table {
+    width: 100%;
+    border-spacing: 0;
+    text-align: center;
+    box-shadow: 0 0 25px #FFFFFF;
+    border-radius: 50px;
+    border-collapse: unset;
+    border: none;
+    margin: auto;
+
+}
+
+.table-wrapper {
+    height: 100%;
+    min-width: 610px;
+    width: 50%;
+    margin: auto;
+    display: block;
+    border-radius: 50px;
+}
+
+.add-resume {
+    height: 65px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.add-resume-title {
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+
+    width: 70px;
+    margin-left: -15px;
+    display: block;
+
+    color: #4A586EFF;
+}
+
+.resumes-list {
+    width: 100%;
+    margin: 15px;
+}
+
+.resumes-list img {
+    height: 20px;
+}
+
+.t-header, tr {
+    font-family: Roboto, serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+
+    height: 60px;
+
+    color: #4A586EFF;
+    background: #FFFFFF;
+}
+
+.t-header-div {
+    height: 60px;
+}
+
+.t-header-div th:first-of-type {
+    border-top-left-radius: 30px;
+}
+
+.t-header-div th:last-of-type {
+    border-top-right-radius: 30px;
+}
+
+.t-body, tr {
+    font-family: Open Sans, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #F8F9FAFF;
+}
+
+.t-body, tr:nth-child(odd) {
+    height: 70px;
+    background: #d0d4da;
+}
+
+.t-body, tr:nth-child(even) {
+    height: 90px;
+    background: #EDEFF2FF;
+}
+
+.resumes-list th:first-of-type {
+    border-top-left-radius: 30px;
+}
+
+.resumes-list th:last-of-type {
+    border-top-right-radius: 30px;
+}
+
+.resumes-list tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 30px;
+}
+
+.resumes-list tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 30px;
+}
+
+.name-column {
+    text-align: start;
+    padding: 0 0 0 38px;
+}
+
+.info-column {
+    text-align: start;
+    width: 230px !important;
+    min-width: 180px !important;
+}
+
+.img-column {
+    width: 110px !important;
+    min-width: 110px !important;
+}

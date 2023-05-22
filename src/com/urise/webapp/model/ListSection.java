@@ -8,6 +8,7 @@ import java.util.Objects;
 public class ListSection extends Section {
     @Serial
     private static final long serialVersionUID = 1L;
+    public static final ListSection EMPTY = new ListSection("");
     private List<String> items;
 
     public ListSection() {
@@ -28,15 +29,7 @@ public class ListSection extends Section {
 
     @Override
     public String toString() {
-        StringBuilder formatted = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            if (i == items.size() - 1) {
-                formatted.append(String.format("%s", items.get(i)));
-            } else {
-                formatted.append(String.format("%s%n", items.get(i)));
-            }
-        }
-        return formatted.toString();
+        return items.toString();
     }
 
     @Override

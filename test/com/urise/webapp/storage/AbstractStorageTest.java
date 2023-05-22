@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -48,7 +49,7 @@ public abstract class AbstractStorageTest {
         R_1.addSection(SectionType.PERSONAL, new TextSection("Personal 1"));
         R_1.addSection(SectionType.ACHIEVEMENTS, new ListSection("Achievement1", "Achievement2", "Achievement3"));
         R_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "GitHub"));
-        /*R_1.addSection(SectionType.EXPERIENCE,
+        R_1.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organization_1", "https://www.something.else",
                                 new Organization.Position(2010, Month.APRIL, "position_1", "content_1"),
@@ -59,14 +60,14 @@ public abstract class AbstractStorageTest {
                                 new Organization.Position(2007, Month.SEPTEMBER, 2008, Month.MAY, "magister", "mag_content"),
                                 new Organization.Position(2003, Month.SEPTEMBER, 2007, Month.JULY, "student", "stud_content"))));
         R_1.addSection(SectionType.EDUCATION,
-                new OrganizationSection(new Organization("College", "https://www.college.xz")));*/
+                new OrganizationSection(new Organization("College", "https://www.college.xz")));
 
         R_2.addContact(ContactType.SKYPE, "SomeSkype");
         R_2.addContact(ContactType.HOME_PHONE, "45-109");
-        /*R_2.addSection(SectionType.EXPERIENCE,
+        R_2.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organization_3", "https://www.something.else",
-                                new Organization.Position(2021, Month.APRIL, "position_3", "content_3"))));*/
+                                new Organization.Position(2021, Month.APRIL, "position_3", "content_3"))));
     }
 
     protected AbstractStorageTest(Storage storage) {

@@ -20,6 +20,7 @@ import static com.urise.webapp.utils.DateUtil.NOW;
 public class Organization implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
     private Link homePage;
     private List<Position> positions;
 
@@ -42,6 +43,8 @@ public class Organization implements Serializable {
     public void setHomePage(Link homePage) {
         this.homePage = homePage;
     }
+
+
 
     public List<Position> getPositions() {
         return positions;
@@ -72,6 +75,7 @@ public class Organization implements Serializable {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
+        public static final Position EMPTY = new Position();
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate startDate;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
