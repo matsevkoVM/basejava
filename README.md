@@ -15,5 +15,5 @@
       </ul>
     <li> <h5> in relational PostgreSQL database </h5>
   </ul>
-  This project includes the following technologies: Java 8, GitHub/Git, JUnit, Logging, GSON, JAXB, SQL, PostgreSQL, Сервлеты, HTML, JSP, JSTL, Tomcat, Maven.
+  This project includes the following technologies: Java 8, GitHub/Git, JUnit, Logging, GSON, JAXB, SQL, PostgreSQL, Servlets, HTML, JSP, JSTL, Tomcat, Maven.
 </p>
